@@ -230,10 +230,47 @@ void menuReplaceArray(){
 }
 
 
-int isConditionApplied(arrType firstItem){
-	return (firstItem > 10);	
+int isConditionApplied(arrType item){
+	return (item > 50 && item < 89);	
 }
 
+void displayLongestSequence(arrType * arr, int (*condition)(arrType el)){
+	int seqStart = 0, seqEnd = 0;
+	for(int i = 0; i < ARR_LEN; i++){
+		for(int j = i; j < ARR_LEN; j++){
+			if(condition(arr[j])){
+				if((j-i) > (seqEnd - seqStart)){
+					seqStart = i;
+					seqEnd = j;
+				}
+			} else {
+				break;
+			}
+
+		}
+	}
+	printf("Longest sequence: ");
+	for(int i = seqStart; i < seqEnd + 1; i++){
+		printf("%d ",arr[i]);
+	}
+	printf("\n");
+}
+
+int menuSearchForLongestSequence(){
+	FILE * inFile = fopen(BIN_FILE_NAME, "rb");
+	arrType arr[ARR_LEN];
+	int (*f)(arrType el);
+	f = isConditionApplied;
+
+	if(!inFile){
+		fprintf(stderr, "Failed to open binary file\n");
+		return 1;
+	}
+	fseek(inFile,-sizeof(arrType[ARR_LEN]), SEEK_END);
+	fread(arr, sizeof(arrType),ARR_LEN, inFile);
+	displayLongestSequence(arr, f);
+	return 0;
+}
 
 char handleMenuSelect(){
 
@@ -257,6 +294,7 @@ char handleMenuSelect(){
 		menuReplaceArray();
 		break;
 	case '5':
+		menuSearchForLongestSequence();
 		break;
 	default:
 		break;
