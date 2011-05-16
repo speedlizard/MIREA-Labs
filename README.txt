@@ -1,0 +1,1 @@
+This repository contains some parts of MIREA labs for the "Structure and data processing algorithms".
