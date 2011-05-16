@@ -1,7 +1,7 @@
-#include <stdio.h>
+п»ї#include <stdio.h>
 
 /*
- Длинна используемых массивов
+ Р”Р»РёРЅРЅР° РёСЃРїРѕР»СЊР·СѓРµРјС‹С… РјР°СЃСЃРёРІРѕРІ
 */
 #define ARR_LEN 10
 typedef int arrType;
@@ -10,7 +10,7 @@ typedef int arrType;
 #define TEXT_FILE_NAME "tests.txt"
 #define BIN_FILE_NAME "tests.dat"
 /*
- Функция для отображения массива на экране
+ Р¤СѓРЅРєС†РёСЏ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РјР°СЃСЃРёРІР° РЅР° СЌРєСЂР°РЅРµ
 */
 void printArray(arrType * arr){
 	for(int i = 0; i < ARR_LEN; i++){
@@ -48,14 +48,14 @@ int readSingleArrayFromBinary(const char * filename, arrType * arr){
 int readFromTextFile(const char * filename){
 	FILE * inputFile;
 	arrType arr[ARR_LEN];
-	inputFile = fopen(filename, "r");//Открываем файл только для чтения
+	inputFile = fopen(filename, "r");//РћС‚РєСЂС‹РІР°РµРј С„Р°Р№Р» С‚РѕР»СЊРєРѕ РґР»СЏ С‡С‚РµРЅРёСЏ
 	if(!inputFile){
 		fprintf(stderr, "Failed to open '%s' file\n", inputFile);
 		return 1;
 	}
-	while(!feof(inputFile)){//Читаем файл, пока в нём есть содержимое
+	while(!feof(inputFile)){//Р§РёС‚Р°РµРј С„Р°Р№Р», РїРѕРєР° РІ РЅС‘Рј РµСЃС‚СЊ СЃРѕРґРµСЂР¶РёРјРѕРµ
 			for(int i = 0; i < ARR_LEN; i++){
-				fscanf(inputFile, "%d", &arr[i]);//Используем форматный ввод для записи элемента массива
+				fscanf(inputFile, "%d", &arr[i]);//РСЃРїРѕР»СЊР·СѓРµРј С„РѕСЂРјР°С‚РЅС‹Р№ РІРІРѕРґ РґР»СЏ Р·Р°РїРёСЃРё СЌР»РµРјРµРЅС‚Р° РјР°СЃСЃРёРІР°
 			}
 	}
 	fclose(inputFile);
@@ -73,9 +73,9 @@ int convertTextToBinaryFiles(const char* textFileName, const char* binaryFileNam
 	}
 	fclose(outFile);
 
-	while(!feof(inFile)){//Читаем файл, пока в нём есть содержимое
+	while(!feof(inFile)){//Р§РёС‚Р°РµРј С„Р°Р№Р», РїРѕРєР° РІ РЅС‘Рј РµСЃС‚СЊ СЃРѕРґРµСЂР¶РёРјРѕРµ
 			for(int i = 0; i < ARR_LEN; i++){
-				fscanf(inFile, "%d", &buf[i]);//Используем форматный ввод для записи элемента массива
+				fscanf(inFile, "%d", &buf[i]);//РСЃРїРѕР»СЊР·СѓРµРј С„РѕСЂРјР°С‚РЅС‹Р№ РІРІРѕРґ РґР»СЏ Р·Р°РїРёСЃРё СЌР»РµРјРµРЅС‚Р° РјР°СЃСЃРёРІР°
 			}
 			writeSingleArrayToBinaryFIle(binaryFileName,buf, true);
 	}
@@ -134,13 +134,13 @@ int removeItemFromTextFile(const char * filename, int indexToRemove){
 	
 	while(!feof(inFile)){
 			for(int i = 0; i < ARR_LEN; i++){
-				fscanf(inFile, "%d", &buf[i]);//Используем форматный ввод для записи элемента массива
+				fscanf(inFile, "%d", &buf[i]);//РСЃРїРѕР»СЊР·СѓРµРј С„РѕСЂРјР°С‚РЅС‹Р№ РІРІРѕРґ РґР»СЏ Р·Р°РїРёСЃРё СЌР»РµРјРµРЅС‚Р° РјР°СЃСЃРёРІР°
 			}
 			if(++itemsRead != indexToRemove){
 				writeSingleArrayToBinaryFIle(tmpFilename, buf, true);
 			}
 	}
-	if(itemsRead < indexToRemove){//Элементов меньше, чем индекс элемента, который надо удалить
+	if(itemsRead < indexToRemove){//Р­Р»РµРјРµРЅС‚РѕРІ РјРµРЅСЊС€Рµ, С‡РµРј РёРЅРґРµРєСЃ СЌР»РµРјРµРЅС‚Р°, РєРѕС‚РѕСЂС‹Р№ РЅР°РґРѕ СѓРґР°Р»РёС‚СЊ
 		printf("Index %d out of current text file records bounds\n", indexToRemove);
 		remove(tmpFilename);
 		return 1;
@@ -148,8 +148,8 @@ int removeItemFromTextFile(const char * filename, int indexToRemove){
 	fclose(inFile);
 	tmpFile = fopen(tmpFilename, "rb");
 	outFile = fopen(filename, "w+");
-	while(readArrayFromBinary(tmpFile, r++, buf) == 0){//Читаем из временного бинарного файла
-		writeSingleArrayToTextFile(outFile, buf);//И записываем в тестовый
+	while(readArrayFromBinary(tmpFile, r++, buf) == 0){//Р§РёС‚Р°РµРј РёР· РІСЂРµРјРµРЅРЅРѕРіРѕ Р±РёРЅР°СЂРЅРѕРіРѕ С„Р°Р№Р»Р°
+		writeSingleArrayToTextFile(outFile, buf);//Р Р·Р°РїРёСЃС‹РІР°РµРј РІ С‚РµСЃС‚РѕРІС‹Р№
 	}
 	fclose(outFile);
 	remove(tmpFilename);
@@ -228,6 +228,12 @@ void menuReplaceArray(){
 	inputArray(arr);
 	replaceArrayInBinaryFile(BIN_FILE_NAME, index, arr);
 }
+
+
+int isConditionApplied(arrType firstItem){
+	return (firstItem > 10);	
+}
+
 
 char handleMenuSelect(){
 
