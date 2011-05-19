@@ -13,13 +13,14 @@ typedef int arrType;
  Функция для отображения массива на экране
 */
 void printArray(arrType * arr){
-	for(int i = 0; i < ARR_LEN; i++){
+	int i;
+	for(i = 0; i < ARR_LEN; i++){
 		printf("%d ", arr[i]);
 	}
 	printf("\n");
 }
 
-int writeSingleArrayToBinaryFIle(const char * filename, arrType * arr, bool writeAppend = false){
+int writeSingleArrayToBinaryFIle(const char * filename, arrType * arr, int writeAppend){
 	FILE * outFile;
 	
 	outFile = writeAppend?fopen(filename, "ab"):fopen(filename, "wb");
@@ -48,13 +49,14 @@ int readSingleArrayFromBinary(const char * filename, arrType * arr){
 int readFromTextFile(const char * filename){
 	FILE * inputFile;
 	arrType arr[ARR_LEN];
+	int i;
 	inputFile = fopen(filename, "r");//Открываем файл только для чтения
 	if(!inputFile){
 		fprintf(stderr, "Failed to open '%s' file\n", inputFile);
 		return 1;
 	}
 	while(!feof(inputFile)){//Читаем файл, пока в нём есть содержимое
-			for(int i = 0; i < ARR_LEN; i++){
+			for(i = 0; i < ARR_LEN; i++){
 				fscanf(inputFile, "%d", &arr[i]);//Используем форматный ввод для записи элемента массива
 			}
 	}
@@ -67,6 +69,7 @@ int convertTextToBinaryFiles(const char* textFileName, const char* binaryFileNam
 	FILE * outFile = fopen(binaryFileName, "w");
 	int dbgcnt= 0;
 	arrType buf[ARR_LEN] = {0};
+	int i;
 	if(!inFile || !outFile){
 		fprintf(stderr, "Failed to open %s or/and %s file(s)", textFileName, binaryFileName);
 		return 1;
@@ -74,10 +77,10 @@ int convertTextToBinaryFiles(const char* textFileName, const char* binaryFileNam
 	fclose(outFile);
 
 	while(!feof(inFile)){//Читаем файл, пока в нём есть содержимое
-			for(int i = 0; i < ARR_LEN; i++){
+			for(i = 0; i < ARR_LEN; i++){
 				fscanf(inFile, "%d", &buf[i]);//Используем форматный ввод для записи элемента массива
 			}
-			writeSingleArrayToBinaryFIle(binaryFileName,buf, true);
+			writeSingleArrayToBinaryFIle(binaryFileName,buf, 1);
 	}
 	return 0;
 }
@@ -116,7 +119,8 @@ int printAllFromBinary(const char * filename){
 }
 
 int writeSingleArrayToTextFile(FILE * outFile, arrType * arr){
-	for(int i = 0; i < ARR_LEN; i++){
+	int i;
+	for(i = 0; i < ARR_LEN; i++){
 		fprintf(outFile, "%d ", arr[i]);
 	}
 	fprintf(outFile, "\n");
@@ -131,13 +135,14 @@ int removeItemFromTextFile(const char * filename, int indexToRemove){
 	int itemsRead = 0;
 	arrType buf[ARR_LEN];
 	int r = 0;
+	int i;
 	
 	while(!feof(inFile)){
-			for(int i = 0; i < ARR_LEN; i++){
+			for(i = 0; i < ARR_LEN; i++){
 				fscanf(inFile, "%d", &buf[i]);//Используем форматный ввод для записи элемента массива
 			}
 			if(++itemsRead != indexToRemove){
-				writeSingleArrayToBinaryFIle(tmpFilename, buf, true);
+				writeSingleArrayToBinaryFIle(tmpFilename, buf, 1);
 			}
 	}
 	if(itemsRead < indexToRemove){//Элементов меньше, чем индекс элемента, который надо удалить
@@ -159,7 +164,8 @@ int removeItemFromTextFile(const char * filename, int indexToRemove){
 arrType * inputArray(arrType * arr){
 	arrType tmp;
 	int result;
-	for(int i = 0; i < ARR_LEN; i++){
+	int i;
+	for(i = 0; i < ARR_LEN; i++){
 		result = 0;
 		do {
 			fflush(stdin);
@@ -236,8 +242,9 @@ int isConditionApplied(arrType item){
 
 void displayLongestSequence(arrType * arr, int (*condition)(arrType el)){
 	int seqStart = 0, seqEnd = 0;
-	for(int i = 0; i < ARR_LEN; i++){
-		for(int j = i; j < ARR_LEN; j++){
+	int i,j;
+	for(i = 0; i < ARR_LEN; i++){
+		for(j = i; j < ARR_LEN; j++){
 			if(condition(arr[j])){
 				if((j-i) > (seqEnd - seqStart)){
 					seqStart = i;
@@ -250,7 +257,7 @@ void displayLongestSequence(arrType * arr, int (*condition)(arrType el)){
 		}
 	}
 	printf("Longest sequence: ");
-	for(int i = seqStart; i < seqEnd + 1; i++){
+	for(i = seqStart; i < seqEnd + 1; i++){
 		printf("%d ",arr[i]);
 	}
 	printf("\n");
