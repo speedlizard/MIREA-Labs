@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <algorithm>
 
 struct Data {
@@ -9,9 +9,9 @@ struct Data {
 int selectSort(int arr[], int size){
 	int tmp;
 	for(int i=1; i < size; i++){
-		for(int j=size-1; j >= i; j--) // Перебор элементов
+		for(int j=size-1; j >= i; j--) // РџРµСЂРµР±РѕСЂ СЌР»РµРјРµРЅС‚РѕРІ
 			if (arr[j-1] > arr[j]){ 
-				tmp = arr[j-1]; // Перестановка элементов
+				tmp = arr[j-1]; // РџРµСЂРµСЃС‚Р°РЅРѕРІРєР° СЌР»РµРјРµРЅС‚РѕРІ
 				arr[j-1] = arr[j];
 				arr[j] = tmp;
 			}
@@ -22,9 +22,9 @@ int selectSort(int arr[], int size){
 int selectSort(char arr[], int size){
 	char tmp;
 	for(int i=1; i < size; i++){
-		for(int j=size-1; j >= i; j--) // Перебор элементов
+		for(int j=size-1; j >= i; j--) // РџРµСЂРµР±РѕСЂ СЌР»РµРјРµРЅС‚РѕРІ
 			if (arr[j-1] > arr[j]){ 
-				tmp = arr[j-1]; // Перестановка элементов
+				tmp = arr[j-1]; // РџРµСЂРµСЃС‚Р°РЅРѕРІРєР° СЌР»РµРјРµРЅС‚РѕРІ
 				arr[j-1] = arr[j];
 				arr[j] = tmp;
 			}
@@ -42,17 +42,17 @@ void selectSort(T a[], int size) {
 	int i, j, k; 
 	T x;
 
-	for( i=0; i < size; i++) {   	// i - номер текущего шага
+	for( i=0; i < size; i++) {   	// i - РЅРѕРјРµСЂ С‚РµРєСѓС‰РµРіРѕ С€Р°РіР°
 		k=i; x=a[i];
 
-		for( j=i+1; j < size; j++){	// цикл выбора наименьшего элемента
+		for( j=i+1; j < size; j++){	// С†РёРєР» РІС‹Р±РѕСЂР° РЅР°РёРјРµРЅСЊС€РµРіРѕ СЌР»РµРјРµРЅС‚Р°
 			if ( a[j] < x ) {
-				k=j; x=a[j];	        // k - индекс наименьшего элемента
+				k=j; x=a[j];	        // k - РёРЅРґРµРєСЃ РЅР°РёРјРµРЅСЊС€РµРіРѕ СЌР»РµРјРµРЅС‚Р°
 			}
 		}
 
 		a[k] = a[i]; 
-		a[i] = x;   	// меняем местами наименьший с a[i]
+		a[i] = x;   	// РјРµРЅСЏРµРј РјРµСЃС‚Р°РјРё РЅР°РёРјРµРЅСЊС€РёР№ СЃ a[i]
 	}
 }
 
