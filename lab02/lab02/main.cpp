@@ -1,5 +1,6 @@
-﻿#include <iostream>
+#include <iostream>
 #include <algorithm>
+#include <string>
 
 struct Data {
 	short x;
@@ -19,18 +20,7 @@ int selectSort(int arr[], int size){
 	return 0;
 }
 
-int selectSort(char arr[], int size){
-	char tmp;
-	for(int i=1; i < size; i++){
-		for(int j=size-1; j >= i; j--) // Перебор элементов
-			if (arr[j-1] > arr[j]){ 
-				tmp = arr[j-1]; // Перестановка элементов
-				arr[j-1] = arr[j];
-				arr[j] = tmp;
-			}
-	}
-	return 0;
-}
+
 using namespace std;
 
 int operator<(Data d1,Data d2){
@@ -74,10 +64,10 @@ int isDivisible(int n){
 
 void drawMenu(){
 	cout<<
-"Please select one of menu items: "<<endl <<
-"1 - Check if the number is divisible on each one of it's digits" <<	endl<<
-"2 - Sort" << endl<<
-"0 - Exit" << endl;
+		"Please select one of menu items: "<<endl <<
+		"1 - Check if the number is divisible on each one of it's digits" <<	endl<<
+		"2 - Check if the balance brace is correct" << endl<<
+		"0 - Exit" << endl;
 }
 
 
@@ -93,6 +83,81 @@ void menuIsDivisible(){
 	cout << "divisible on each of it's digits" << endl;
 }
 
+
+int checkBalanceRecursive(int pos, const char *s, size_t len){
+	int i;
+	int balanced = 0;
+	int status = 0;
+
+	if(pos == len)
+		return -len;
+
+	for(i = pos + 1; i < len; i++){
+		if(s[i] == ')') { 
+			return i;
+		} 
+		if(s[i] == '('){
+			status = checkBalanceRecursive( i , s, len) ;
+			if(status < 0){
+				return status;
+			} else {
+				i = status;
+			}
+		} 
+
+	}
+	return -1;
+}
+
+
+
+bool checkBalance(int pos, const char *s, size_t len){
+	int i = 0;
+	int status = 0;
+	bool balanced = false;
+	int position = -1;
+
+
+	for(i = 0; i < len; i++){
+		if(s[i] == ')'){
+			return false;
+		}
+		
+		if(s[i] == '(')	{
+			status = checkBalanceRecursive(i, s, len);
+			if(status < 0){
+				balanced = false;
+				cout << "Unable to find closing for " << -1 * status << " brace" << endl;
+				break;
+			}
+			i = status;
+
+		}
+	}
+
+	if(status > 0){
+		cout << "Status" << status<<endl;
+		balanced = true;
+	}
+
+
+	return balanced;
+}
+
+
+void menuBraceBalance(){
+	string s;
+
+	cout << "Pease input string for balance brace check: " << endl;
+	cin >> s;
+	if(checkBalance(0, s.c_str(), s.length())){
+		cout << "Balance is correct" << endl;
+	} else {
+		cout << "Balance is not correct"<<endl;
+	}
+}
+
+
 char handleMenu(){
 	char d;
 	cin >> d;
@@ -101,6 +166,7 @@ char handleMenu(){
 		menuIsDivisible();
 		break;
 	case '2':
+		menuBraceBalance();
 		break;
 	default:
 		break;
@@ -117,10 +183,6 @@ int main(){
 	selectSort(arr, 500);
 	for(int i = 0; i < 500; i++){
 		cout << arr[i] << endl;
-	}
-
-	if(isDivisible(33)){
-		cout << "Divisible";
 	}
 
 	do {
